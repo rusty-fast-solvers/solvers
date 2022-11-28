@@ -4,8 +4,6 @@ use std::io::BufReader;
 use std::io::BufWriter;
 use std::path::Path;
 
-use vtkio::model::*;
-
 use serde::Serialize;
 
 use crate::types::domain::Domain;
@@ -40,13 +38,4 @@ pub trait JSON {
         let result: Vec<T> = serde_json::from_reader(reader)?;
         Ok(result)
     }
-}
-
-// HDF5 input and output wrapper for simple serializable types.
-pub trait HDF5<T: hdf5::H5Type> {
-    // Save a Rust data to disk.
-    fn write_hdf5<P: AsRef<Path>>(&self, filename: P) -> hdf5::Result<()>;
-
-    // Read data from a 1D sequence into a Rust vector.
-    fn read_hdf5<P: AsRef<Path>>(filepath: P) -> hdf5::Result<Vec<T>>;
 }
